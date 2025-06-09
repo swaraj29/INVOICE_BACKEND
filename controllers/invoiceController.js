@@ -32,5 +32,9 @@ export const downloadInvoice = async (req, res) => {
   if (!invoice || invoice.user.toString() !== req.userId)
     return res.status(403).json({ message: 'Access denied' });
 
+  if (!invoice.pdfPath) {
+    return res.status(404).json({ message: 'Invoice PDF not yet generated.' });
+  }
+
   res.download(invoice.pdfPath);
 };
